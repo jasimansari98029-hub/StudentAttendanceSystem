@@ -21,13 +21,12 @@ const login = async (data) => {
 
   return {
     _id: user._id,
-    Name: user.name,
-    Email: user.email,
-    Phone: user.phone,
-    Address: user.address,
-    Role: user.roles,
+    name: user.name,
+    email: user.email,
+    phone: user.phone,
+    address: user.address,
+    roles: user.roles,
     isActive: user.isActive,
-    profileImgUrl: user?.profileImgUrl,
   };
 };
 
@@ -52,11 +51,11 @@ const register = async (data) => {
 
   return {
     _id: createdUser._id,
-    Name: createdUser.name,
-    Email: createdUser.email,
-    Phone: createdUser.phone,
-    Address: createdUser.address,
-    Role: createdUser.roles,
+    name: createdUser.name,
+    email: createdUser.email,
+    phone: createdUser.phone,
+    address: createdUser.address,
+    roles: createdUser.roles,
     isActive: createdUser.isActive,
   };
 };
@@ -68,24 +67,14 @@ const forgotPassword = async (email) => {
 
   const token = crypto.randomUUID();
 
-  // await ResetPassword.create({
-  //   userId: user._id,
-  //   token,
-  // });
-
-  // Note: Password reset link is only sent in the email used to create the resend api
+  await ResetPassword.create({
+    userId: user._id,
+    token,
+  });
 
   const resetPasswordLink = `${config.appUrl}/reset-password?userId=${user._id}&token=${token}`;
 
-  sendEmail(email, {
-    subject: "Reset password link",
-    html: `
-        <a
-          href="${resetPasswordLink}"
-        >
-         Click here to Reset password
-        </a>`,
-  });
+  console.log(resetPasswordLink);
 
   return { message: "Reset password link sent successfully." };
 };
