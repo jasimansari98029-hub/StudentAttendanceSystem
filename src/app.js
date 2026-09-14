@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import config from "./config/config.js";
 import connectDb from "./config/database.js";
 import express from "express";
+import studentRoute from "./routes/student.route.js";
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.get("/", (req, res) => {
 app.use(bodyParser.json());
 
 app.use("/api/auth", authRoute);
+app.use("/api/student", studentRoute);
 
 app.listen(config.port, () => {
   console.log(`app listening on port ${config.port}`);
